@@ -1,32 +1,58 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <InputTask v-on:child-event="TaskAdded" />
+    <taskView v-bind:tasks="tasks" v-on:child-event="TaskFinished" />
   </div>
 </template>
 
-<style>
+<script>
+import TaskView from "./components/TaskView";
+import InputTask from "./components/InputTask";
+
+export default {
+  name: "App",
+  components: {
+    TaskView,
+    InputTask
+  },
+  data() {
+    return {
+      tasks: [
+        { name: "no1", flag: "false" },
+        { name: "no2", flag: "true" }
+      ]
+    };
+  },
+  methods: {
+    TaskFinished: function(msg) {
+      this.tasks.forEach(value => {
+        if (value.name === msg) {
+          if (value.flag === true) {
+            value.flag = false;
+          } else if (value.flag === false) {
+            value.flag = true;
+          }
+        }
+      });
+    },
+    TaskAdded: function(msg) {
+      //console.log(msg);
+      this.tasks.push({
+        name: msg,
+        flag: false
+      });
+    }
+  }
+};
+</script>
+
+<style scoped>
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+  margin-top: 60px;
 }
 </style>
