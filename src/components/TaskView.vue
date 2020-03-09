@@ -27,6 +27,7 @@ export default {
   methods: {
     click: function(msg) {
       this.$emit("child-event", msg);
+      console.log("test");
     }
   }
 };
