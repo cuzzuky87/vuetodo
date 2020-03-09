@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <InputTask v-on:child-event="TaskAdded" />
-    <taskView v-bind:tasks="tasks" v-on:child-event="TaskFinished" />
+    <taskView v-bind:tasks="tasks" v-on:child-event="TaskFinished" v-on:delete-event="DeleteTask" />
   </div>
 </template>
 
@@ -17,15 +17,13 @@ export default {
   },
   data() {
     return {
-      tasks: [
-        { name: "no1", flag: "false" },
-        { name: "no2", flag: "true" }
-      ]
+      tasks: []
     };
   },
   methods: {
     TaskFinished: function(msg) {
       this.tasks.forEach(value => {
+        console.log(value);
         if (value.name === msg) {
           if (value.flag === true) {
             value.flag = false;
@@ -41,6 +39,9 @@ export default {
         name: msg,
         flag: false
       });
+    },
+    DeleteTask: function(taskName) {
+      this.tasks.splice(this.tasks.indexOf(taskName), 1);
     }
   }
 };
