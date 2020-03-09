@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <InputTask v-on:child-event="TaskAdded" />
-    <taskView v-bind:tasks="tasks" v-on:child-event="TaskFinished" v-on:delete-event="DeleteTask" />
+    <taskView
+      v-bind:tasks="tasks"
+      v-on:child-event="TaskFinished"
+      v-on:delete-event="DeleteTask"
+    />
   </div>
 </template>
 
